@@ -1,3 +1,5 @@
-# Nesys_at_Home
+# GC server
 
-very much incomplete nesys server emulator
+A very much incomplete GC4EX server emulator
+
+Based on https://github.com/fatal-bundy/nesys_at_home
