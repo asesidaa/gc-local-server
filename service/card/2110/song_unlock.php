@@ -66,8 +66,8 @@ function getSongUnlock()
 
 
         $rank_xml_rank_record->appendChild($rank_xml->createElement('music_id', $hash_ref_rank_entry['music_id']));
-        $rank_xml_rank_record->appendChild($rank_xml->createElement('title', $hash_ref_rank_entry['title']));
-        $rank_xml_rank_record->appendChild($rank_xml->createElement('artist', $hash_ref_rank_entry['artist']));
+        $rank_xml_rank_record->appendChild($rank_xml->createElement('title', htmlspecialchars($hash_ref_rank_entry['title'], ENT_XML1 | ENT_QUOTES)));
+        $rank_xml_rank_record->appendChild($rank_xml->createElement('artist', htmlspecialchars($hash_ref_rank_entry['artist'], ENT_XML1 | ENT_QUOTES)));
         $rank_xml_rank_record->appendChild($rank_xml->createElement('release_date', $hash_ref_rank_entry['release_date']));
         $rank_xml_rank_record->appendChild($rank_xml->createElement('end_date', $hash_ref_rank_entry['end_date']));
         $rank_xml_rank_record->appendChild($rank_xml->createElement('new_flag', $hash_ref_rank_entry['new_flag']));
@@ -109,7 +109,6 @@ function getMusicExtra()
     try
     {
         $columns = implode(',', array('music_id',
-                                      'release_date',
                                       'use_flag'));
         $query = "SELECT $columns FROM $table";
         $sth = $dbh->prepare($query);
@@ -134,7 +133,6 @@ function getMusicExtra()
 
 
         $rank_xml_rank_record->appendChild($rank_xml->createElement('music_id', $hash_ref_rank_entry['music_id']));
-        $rank_xml_rank_record->appendChild($rank_xml->createElement('release_date', $hash_ref_rank_entry['release_date']));
         $rank_xml_rank_record->appendChild($rank_xml->createElement('use_flag', $hash_ref_rank_entry['use_flag']));
         $i++;
     }
@@ -173,7 +171,6 @@ function getMusicAou()
     try
     {
         $columns = implode(',', array('music_id',
-                                      'release_date',
                                       'use_flag'));
         $query = "SELECT $columns FROM $table";
         $sth = $dbh->prepare($query);
@@ -198,7 +195,6 @@ function getMusicAou()
 
 
         $rank_xml_rank_record->appendChild($rank_xml->createElement('music_id', $hash_ref_rank_entry['music_id']));
-        $rank_xml_rank_record->appendChild($rank_xml->createElement('release_date', $hash_ref_rank_entry['release_date']));
         $rank_xml_rank_record->appendChild($rank_xml->createElement('use_flag', $hash_ref_rank_entry['use_flag']));
         $i++;
     }

@@ -84,7 +84,7 @@ function get_unlock_reward_data($card_id): DOMDocument
     for ($i = 0; $i <= $count; $i++) {
         $unlock_reward_record = $unlock_reward_xml->createElement("record");
         $unlock_reward_record->setAttribute("id", $i);
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("card_id", $card_id));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("card_id"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("reward_id", $i));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("reward_type", "2"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_date", "2021-05-30"));
@@ -123,7 +123,7 @@ function get_unlock_keynum_data($card_id): DOMDocument
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("card_id", $card_id));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("reward_id", $i));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("key_num", "1"));
-        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("reward_count", "0"));
+        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("reward_count", "1"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("expired_flag", "0"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("cash_flag", "0"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("use_flag", "1"));
@@ -348,7 +348,7 @@ function get_total_trophy($card_id): DOMDocument
     return $trophy_xml;
 }
 
-function get_card_detail($card_id): DOMDocument
+function get_card_detail_records($card_id): DOMDocument
 {
     $table = "card_detail";
     $card_table = 'mysql:host=' . MYSQL_HOSTNAME . ';dbname=' . RANKING_2110_CARD;
@@ -389,25 +389,87 @@ function get_card_detail($card_id): DOMDocument
         $card_detail_record->setAttribute("id", $i);
         $card_detail_xml_main->appendChild($card_detail_record);
 
-        $card_detail_record->appendChild($card_detail_xml->createElement("card_id",  $card_detail["card_id"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("pcol1",  $card_detail["pcol1"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("pcol2",  $card_detail["pcol2"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("pcol3",  $card_detail["pcol3"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("score_i1",  $card_detail["score_i1"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui1",  $card_detail["score_ui1"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui2",  $card_detail["score_ui2"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui3",  $card_detail["score_ui3"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui4",  $card_detail["score_ui4"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui5",  $card_detail["score_ui5"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui6",  $card_detail["score_ui6"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("score_bi1",  $card_detail["score_bi1"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("last_play_tenpo_id",  $card_detail["last_play_tenpo_id"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("fcol1",  $card_detail["fcol1"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("fcol2",  $card_detail["fcol2"]));
-        $card_detail_record->appendChild($card_detail_xml->createElement("fcol3",  $card_detail["fcol3"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("card_id", $card_detail["card_id"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("pcol1", $card_detail["pcol1"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("pcol2", $card_detail["pcol2"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("pcol3", $card_detail["pcol3"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("score_i1", $card_detail["score_i1"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui1", $card_detail["score_ui1"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui2", $card_detail["score_ui2"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui3", $card_detail["score_ui3"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui4", $card_detail["score_ui4"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui5", $card_detail["score_ui5"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("score_ui6", $card_detail["score_ui6"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("score_bi1", $card_detail["score_bi1"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("last_play_tenpo_id", $card_detail["last_play_tenpo_id"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("fcol1", $card_detail["fcol1"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("fcol2", $card_detail["fcol2"]));
+        $card_detail_record->appendChild($card_detail_xml->createElement("fcol3", $card_detail["fcol3"]));
 
         $i++;
     }
+
+
+    return $card_detail_xml;
+}
+
+function get_card_detail_record($card_id, $data): DOMDocument
+{
+    $xml = new SimpleXMLElement($data);
+    $pcol1 = $xml->data->pcol1;
+    $pcol2 = $xml->data->pcol2;
+    $pcol3 = $xml->data->pcol3;
+
+    $table = "card_detail";
+    $card_table = 'mysql:host=' . MYSQL_HOSTNAME . ';dbname=' . RANKING_2110_CARD;
+    $dbh = NULL;
+
+    try {
+        // Connect
+        $dbh = new PDO($card_table, MYSQL_USERNAME, MYSQL_PASSWORD);
+        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dbh->setAttribute(PDO::ATTR_AUTOCOMMIT, 0); // AutoCommit OFF
+        $dbh->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+    } catch (PDOException $e) {
+        // Exception
+        //quit(ERROR_009);
+    }
+
+    $card_detail = NULL;
+    $card_detail_xml = new DOMDocument('1.0', 'UTF-8');
+    $card_detail_xml->formatOutput = true;
+    $card_detail_root = $card_detail_xml->createElement("root");
+    $card_detail_xml->appendChild($card_detail_root);
+    $card_detail_xml_main = $card_detail_xml->createElement("card_detail");
+    $card_detail_root->appendChild($card_detail_xml_main);
+    try {
+        $query_str = "SELECT * FROM $table WHERE card_id=$card_id and pcol1=$pcol1 and pcol2=$pcol2 and pcol3=$pcol3";
+        error_log($query_str);
+        $query = $dbh->prepare($query_str);
+        $query->execute();
+        $card_detail = $query->fetch(PDO::FETCH_ASSOC);
+        $query = NULL;
+    } catch (PDOException $e) {
+        // Exception
+        quit(ERROR_010);
+    }
+
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("card_id", $card_detail["card_id"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("pcol1", $card_detail["pcol1"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("pcol2", $card_detail["pcol2"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("pcol3", $card_detail["pcol3"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("score_i1", $card_detail["score_i1"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("score_ui1", $card_detail["score_ui1"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("score_ui2", $card_detail["score_ui2"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("score_ui3", $card_detail["score_ui3"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("score_ui4", $card_detail["score_ui4"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("score_ui5", $card_detail["score_ui5"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("score_ui6", $card_detail["score_ui6"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("score_bi1", $card_detail["score_bi1"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("last_play_tenpo_id", $card_detail["last_play_tenpo_id"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("fcol1", $card_detail["fcol1"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("fcol2", $card_detail["fcol2"]));
+    $card_detail_xml_main->appendChild($card_detail_xml->createElement("fcol3", $card_detail["fcol3"]));
 
 
     return $card_detail_xml;
@@ -457,80 +519,8 @@ function get_card_bdata($card_id): DOMDocument
     return $card_xml;
 }
 
-function write_card($card_id, $data)
+function init_connection(): mysqli
 {
-    $xml = simplexml_load_string($data);
-    $json = json_encode($xml);
-    $array = json_decode($json,TRUE);
-    $player_name = $array["data"]["player_name"];
-    $achieve_status =  $array["data"]["achieve_status"];
-    $score_i1 = $array["data"]["score_i1"];
-    $fcol1 =  $array["data"]["fcol1"];
-    $fcol2 =  $array["data"]["fcol2"];
-    $fcol3 =  $array["data"]["fcol3"];
-
-    $table = "card_main";
-    $dsn_ranking = 'mysql:host=' . MYSQL_HOSTNAME . ';dbname=' . RANKING_2110_CARD;
-    $dbh = NULL;
-
-
-    try
-    {
-        // Connect
-        $dbh = new PDO($dsn_ranking, MYSQL_USERNAME, MYSQL_PASSWORD);
-        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $dbh->setAttribute(PDO::ATTR_AUTOCOMMIT, 0); // AutoCommit OFF
-        $dbh->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
-    } catch (PDOException $e)
-    {
-        // Exception
-        //quit(ERROR_009);
-    }
-
-    $hash_ref_rank_entry = NULL;
-    $card_xml = new DOMDocument('1.0', 'UTF-8');
-    $card_xml->formatOutput = true;
-    $card_root = $card_xml->createElement("root");
-    $card_xml->appendChild($card_root);
-    $card_xml_main = $card_xml->createElement("card");
-    $card_root->appendChild($card_xml_main);
-    try
-    {
-        $columns = implode(',', array('card_id',
-            'player_name',
-            'score_i1',
-            'fcol1',
-            'fcol2',
-            'fcol3',));
-        $query = "REPLACE INTO $table ($columns) VALUES (?,?,?,?,?,?)";
-        $sth = $dbh->prepare($query);
-        $sth->bindParam(':card_id', $card_id, PDO::PARAM_INT);
-        $sth->bindParam(':player_name', $player_name, PDO::PARAM_STR);
-        $sth->bindParam(':score_i1', $score_i1, PDO::PARAM_INT);
-        $sth->bindParam(':fcol1', $fcol1, PDO::PARAM_INT);
-        $sth->bindParam(':fcol2', $fcol2, PDO::PARAM_INT);
-        $sth->bindParam(':fcol3', $fcol3, PDO::PARAM_INT);
-
-        $sth->execute();
-        $sth = NULL;
-    } catch (PDOException $e) {
-        // Exception
-        echo "Error updating record: " . $sth->errorCode();
-    }
-    return $data;
-}
-
-function write_card_bdata($card_id, $data)
-{
-    error_log("Raw data: $data");
-    $xml = new SimpleXMLElement($data);
-    $bdata = $xml->data->bdata;
-    $bdata_size = $xml->data->bdata_size;
-
-    error_log("Bdata: $bdata, Bdata_size: $bdata_size");
-
-    $table = "card_bdata";
-    // Connect
     mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     $connection = null;
     try {
@@ -543,14 +533,60 @@ function write_card_bdata($card_id, $data)
         error_log("Error connecting database, error: " . $connection->connect_error);
         exit();
     }
+    return $connection;
+}
+
+function write_card_bdata($card_id, $data)
+{
+    $xml = new SimpleXMLElement($data);
+    $bdata = $xml->data->bdata;
+    $bdata_size = $xml->data->bdata_size;
+
+    $table = "card_bdata";
+    // Connect
+    $connection = init_connection();
 
     try {
         $query = "REPLACE INTO $table VALUES ($card_id, '$bdata', $bdata_size)";
         $connection->query($query);
         $connection->close();
-    } catch (PDOException $e) {
+    } catch (mysqli_sql_exception $e) {
         // Exception
-        error_log("Error updating record: " . $e->errorCode());
+        error_log("Error updating record: " . $e->getMessage());
+    }
+    return $data;
+}
+
+function write_card_detail($card_id, $data)
+{
+    $xml = new SimpleXMLElement($data);
+    $pcol1 = $xml->data->pcol1;
+    $pcol2 = $xml->data->pcol2;
+    $pcol3 = $xml->data->pcol3;
+    $score_i1 = $xml->data->score_i1;
+    $score_ui1 = $xml->data->score_ui1;
+    $score_ui2 = $xml->data->score_ui2;
+    $score_ui3 = $xml->data->score_ui3;
+    $score_ui4 = $xml->data->score_ui4;
+    $score_ui5 = $xml->data->score_ui5;
+    $score_ui6 = $xml->data->score_ui6;
+    $score_bi1 = $xml->data->score_bi1;
+    $fcol1 = $xml->data->fcol1;
+    $fcol2 = $xml->data->fcol2;
+    $fcol3 = $xml->data->fcol3;
+
+    $table = "card_detail";
+    // Connect
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $connection = init_connection();
+
+    try {
+        $query = "REPLACE INTO $table VALUES ($card_id, $pcol1, $pcol2, $pcol3, $score_i1, $score_ui1, $score_ui2,  $score_ui3, $score_ui4, $score_ui5, $score_ui6, $score_bi1, '1337', $fcol1, $fcol2, $fcol3)";
+        $connection->query($query);
+        $connection->close();
+    } catch (mysqli_sql_exception $e) {
+        // Exception
+        error_log("Error updating record: " . $e->getMessage());
     }
     return $data;
 }

@@ -14,7 +14,7 @@ require("../../global_funcs/sec_functions.inc");
 // Read requests
 const card = '259';
 const card_details = '260';
-const card_details_history = '261';
+const card_details_records = '261';
 const card_bdata = '264';
 const session_get = '401';
 const session_start = '402';
@@ -104,7 +104,6 @@ if ((string)$gid == "303801") {
                 case coin_writer:
                 case music_detail_writer:
                 case unlock_keynum_writer:
-                case card_details_writer:
                 case se_writer:
                 {
                     //card_writer($card_no,$xml_in);
@@ -112,18 +111,27 @@ if ((string)$gid == "303801") {
                     error_log("Data: $xml_in");
                     strOutput($xml_in);
                 }
+                case card_details_writer:
+                {
+                    $printString = write_card_detail($card_no, $xml_in);
+                    strOutput($printString);
+                }
                 case card_bdata_writer:
                 {
                     $printString = write_card_bdata($card_no, $xml_in);
                     strOutput($printString);
                 }
                 case card:
-                case card_details_history:
                 case cond:
                 case get_message:
                 case event_reward:
                 {
                     $printString = card($card_no);
+                    strOutput($printString->saveXML());
+                }
+                case card_details_records:
+                {
+                    $printString = get_card_detail_records($card_no);
                     strOutput($printString->saveXML());
                 }
                 case item:
@@ -178,7 +186,7 @@ if ((string)$gid == "303801") {
                 }
                 case card_details:
                 {
-                    $printString = get_card_detail($card_no);
+                    $printString = get_card_detail_record($card_no, $xml_in);
                     strOutput($printString->saveXML());
                 }
                 case card_bdata:
