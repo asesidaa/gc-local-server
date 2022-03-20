@@ -47,6 +47,7 @@ const navigator_writer = '954';
 const coin_writer = '980';
 const skin_writer = '933';
 const unlock_keynum_writer = '1020';
+const se_writer = '8969';
 
 
 $gid = isset($_POST['gid']) ? intval($_POST['gid']) : NULL;
@@ -104,12 +105,17 @@ if ((string)$gid == "303801") {
                 case music_detail_writer:
                 case unlock_keynum_writer:
                 case card_details_writer:
-                case card_bdata_writer:
+                case se_writer:
                 {
                     //card_writer($card_no,$xml_in);
                     error_log("Get write request... Type: $type");
                     error_log("Data: $xml_in");
                     strOutput($xml_in);
+                }
+                case card_bdata_writer:
+                {
+                    $printString = write_card_bdata($card_no, $xml_in);
+                    strOutput($printString);
                 }
                 case card:
                 case card_details_history:
@@ -179,6 +185,12 @@ if ((string)$gid == "303801") {
                 {
                     $printString = get_card_bdata($card_no);
                     strOutput($printString->saveXML());
+                }
+                default:
+                {
+                    error_log("Unhandled request type! Type=$type");
+                    error_log("Data: $xml_in");
+                    exit();
                 }
             }
         }

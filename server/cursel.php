@@ -15,5 +15,3 @@ function strOutput($strParam)
     header(sprintf("Content-Length: %d", strlen($strParam)));
     print($strParam);
 }
-
-;

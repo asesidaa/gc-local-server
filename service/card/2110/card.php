@@ -61,11 +61,7 @@ function card($card_id): DOMDocument
     $card_xml_main->appendChild($card_xml->createElement('created', $hash_ref_rank_entry['created']));
     $card_xml_main->appendChild($card_xml->createElement('updated', $hash_ref_rank_entry['updated']));
 
-    $card_root->appendChild($card_xml->createElement('card_detail'));
-    $card_root->appendChild($card_xml->createElement('card_bdata'));
-
     $card_root->appendChild($card_xml->createElement('event_reward'));
-
 
     $card_root->appendChild($card_xml->createElement('get_message'));
 
@@ -85,26 +81,26 @@ function get_unlock_reward_data($card_id): DOMDocument
     $unlock_reward_root->appendChild($unlock_reward_items);
     $count = 1;
 
-    for ($i = 1; $i <= $count; $i++) {
+    for ($i = 0; $i <= $count; $i++) {
         $unlock_reward_record = $unlock_reward_xml->createElement("record");
         $unlock_reward_record->setAttribute("id", $i);
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("card_id", $card_id));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("reward_id", $i));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("reward_type", "2"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_date", "2021-05-30 02:10:02"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_date", "2030-05-30 02:10:02"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_time", "2021-05-30 02:10:02"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_time", "2030-05-30 02:10:02"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_date", "2021-05-30"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_date", "2030-05-30"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_time", "00:00:01"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_time", "23:59:59"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("target_id", "2"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("target_num", "10"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("target_num", "2"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("key_num", "3"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("use_flag", "1"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("display_flag", "1"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("created", "1"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("modified", "1"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("limited_flag", "0"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_unixtime", "1622311802"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_unixtime", "1906308602"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_unixtime", "1622304001"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_unixtime", "1906387199"));
         $unlock_reward_items->appendChild($unlock_reward_record);
     }
 
@@ -121,13 +117,13 @@ function get_unlock_keynum_data($card_id): DOMDocument
     $unlock_keynum_root->appendChild($unlock_keynum_items);
     $count = 1;
 
-    for ($i = 1; $i <= $count; $i++) {
+    for ($i = 0; $i <= $count; $i++) {
         $unlock_keynum_record = $unlock_keynum_xml->createElement("record");
         $unlock_keynum_record->setAttribute("id", $i);
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("card_id", $card_id));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("reward_id", $i));
-        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("key_num", "3"));
-        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("reward_count", "10"));
+        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("key_num", "1"));
+        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("reward_count", "0"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("expired_flag", "0"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("cash_flag", "0"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("use_flag", "1"));
@@ -477,6 +473,7 @@ function write_card($card_id, $data)
     $dsn_ranking = 'mysql:host=' . MYSQL_HOSTNAME . ';dbname=' . RANKING_2110_CARD;
     $dbh = NULL;
 
+
     try
     {
         // Connect
@@ -505,8 +502,7 @@ function write_card($card_id, $data)
             'fcol1',
             'fcol2',
             'fcol3',));
-        $query = "REPLACE INTO $table ($columns)
-    VALUES (?,?,?,?,?,?)";
+        $query = "REPLACE INTO $table ($columns) VALUES (?,?,?,?,?,?)";
         $sth = $dbh->prepare($query);
         $sth->bindParam(':card_id', $card_id, PDO::PARAM_INT);
         $sth->bindParam(':player_name', $player_name, PDO::PARAM_STR);
@@ -517,10 +513,44 @@ function write_card($card_id, $data)
 
         $sth->execute();
         $sth = NULL;
-    } catch (PDOException $e)
-    {
+    } catch (PDOException $e) {
         // Exception
-        echo "Error updating record: " . $sth->error;
+        echo "Error updating record: " . $sth->errorCode();
+    }
+    return $data;
+}
+
+function write_card_bdata($card_id, $data)
+{
+    error_log("Raw data: $data");
+    $xml = new SimpleXMLElement($data);
+    $bdata = $xml->data->bdata;
+    $bdata_size = $xml->data->bdata_size;
+
+    error_log("Bdata: $bdata, Bdata_size: $bdata_size");
+
+    $table = "card_bdata";
+    // Connect
+    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    $connection = null;
+    try {
+        $connection = new mysqli(MYSQL_HOSTNAME, MYSQL_USERNAME, MYSQL_PASSWORD, RANKING_2110_CARD);
+    } catch (mysqli_sql_exception $e) {
+        error_log("Connection to DB fail! Error: " . $e->getMessage());
+    }
+
+    if ($connection == null) {
+        error_log("Error connecting database, error: " . $connection->connect_error);
+        exit();
+    }
+
+    try {
+        $query = "REPLACE INTO $table VALUES ($card_id, '$bdata', $bdata_size)";
+        $connection->query($query);
+        $connection->close();
+    } catch (PDOException $e) {
+        // Exception
+        error_log("Error updating record: " . $e->errorCode());
     }
     return $data;
 }
