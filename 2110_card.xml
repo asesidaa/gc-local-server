@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.1.1
+- https://www.phpmyadmin.net
+-
+- 主机： 127.0.0.1
+- 生成日期： 2022-03-20 16:36:21
+- 服务器版本： 10.4.22-MariaDB
+- PHP 版本： 8.1.2
+-->
+
+<pma_xml_export xmlns:pma="https://www.phpmyadmin.net/some_doc_url/" version="1.0">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="2110_card" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="card_bdata">
+                CREATE TABLE `card_bdata` (
+                `card_id` varchar(16) NOT NULL,
+                `bdata` longtext NOT NULL,
+                `bdata_size` int(11) NOT NULL,
+                PRIMARY KEY (`card_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="card_detail">
+                CREATE TABLE `card_detail` (
+                `card_id` varchar(16) NOT NULL,
+                `pcol1` int(11) NOT NULL,
+                `pcol2` int(11) NOT NULL,
+                `pcol3` int(11) NOT NULL,
+                `score_i1` int(11) NOT NULL,
+                `score_ui1` int(11) NOT NULL,
+                `score_ui2` int(11) NOT NULL,
+                `score_ui3` int(11) NOT NULL,
+                `score_ui4` int(11) NOT NULL,
+                `score_ui5` int(11) NOT NULL,
+                `score_ui6` int(11) NOT NULL,
+                `score_bi1` int(11) NOT NULL,
+                `last_play_tenpo_id` text NOT NULL DEFAULT &#039;1337&#039;,
+                `fcol1` int(11) NOT NULL,
+                `fcol2` int(11) NOT NULL,
+                `fcol3` int(11) NOT NULL,
+                PRIMARY KEY (`card_id`,`pcol1`,`pcol2`,`pcol3`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="card_main">
+                CREATE TABLE `card_main` (
+                `card_id` varchar(16) NOT NULL,
+                `player_name` text NOT NULL,
+                `score_i1` int(11) NOT NULL,
+                `fcol1` int(11) NOT NULL,
+                `fcol2` int(11) NOT NULL,
+                `fcol3` int(11) NOT NULL,
+                `achieve_status` text NOT NULL,
+                `created` int(11) NOT NULL DEFAULT 0,
+                `updated` int(11) NOT NULL DEFAULT 0,
+                UNIQUE KEY `card_id` (`card_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="music_aou">
+                CREATE TABLE `music_aou` (
+                `music_id` text NOT NULL,
+                `title` text NOT NULL,
+                `artist` text NOT NULL,
+                `release_date` text NOT NULL,
+                `end_date` text NOT NULL,
+                `new_flag` int(11) NOT NULL,
+                `use_flag` int(11) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="music_extra">
+                CREATE TABLE `music_extra` (
+                `music_id` int(11) NOT NULL,
+                `use_flag` int(11) NOT NULL,
+                PRIMARY KEY (`music_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="music_unlock">
+                CREATE TABLE `music_unlock` (
+                `music_id` int(11) NOT NULL,
+                `title` text NOT NULL,
+                `artist` text NOT NULL,
+                `release_date` text NOT NULL,
+                `end_date` text NOT NULL,
+                `new_flag` int(11) NOT NULL,
+                `use_flag` int(11) NOT NULL,
+                PRIMARY KEY (`music_id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+</pma_xml_export>
