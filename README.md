@@ -14,9 +14,14 @@ Based on https://github.com/fatal-bundy/nesys_at_home
 6. Create a database, you can change the database config in config/config.inc
 7. Create 6 tables, schemas dumped in 2110_card.xml using phpmyadmin
 8. For music_unlock and music_extra, backup data are exported to .sql files
-7. For card_main, first import the backup data then for card with id 7020392010281502, change the card id and player
+9. For card_main, first import the backup data then for card with id 7020392010281502, change the card id and player
    name of your choice
-7. Open the game, without nesys emu, you should be able to use the card
+10. Open the game, without nesys emu, you should be able to use the card
+
+# Note
+
+The root CA have to be re-imported every time computer reboots, I don't know why. I am not familiar with that. But it
+works.
 
 # Missing functions
 
