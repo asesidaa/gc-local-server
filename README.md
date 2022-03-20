@@ -25,6 +25,5 @@ works.
 
 # Missing functions
 
-- [ ] No saving for avatar/navigator/title/se/skin selection
 - [ ] Coin is fixed at 999999
 - [ ] Reward unlocking is broken, wait 60s or the game will crash
