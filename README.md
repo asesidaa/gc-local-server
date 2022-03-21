@@ -1,6 +1,6 @@
 # GC server
 
-A very much incomplete GC4EX server emulator
+A GC4EX local server prototype, feel free to rewrite it and improve.
 
 Based on https://github.com/fatal-bundy/nesys_at_home
 
@@ -20,10 +20,13 @@ Based on https://github.com/fatal-bundy/nesys_at_home
 
 # Note
 
-The root CA have to be re-imported every time computer reboots, I don't know why. I am not familiar with that. But it
-works.
+- The root CA have to be re-imported every time computer reboots, I don't know why. I am not familiar with that. But it
+  works.
+- To make the card reading work, I am currently using teknoparrot to emulate RFiD. However, for IO, I am using jconfig. They can actually be mixed. Just remember to turn off unnecessary emulations.
 
 # Missing functions
 
 - [ ] Coin is fixed at 999999
-- [ ] Reward unlocking is broken, wait 60s or the game will crash
+- [ ] Everything is unlocked at beginning, except for high difficulty and extras.
+- [ ] All the item count will always be 99
+- [x] ~~Reward unlocking is broken, wait 60s or the game will crash~~ Fixed, but not saving it, just to make the game over faster
