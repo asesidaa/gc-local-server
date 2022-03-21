@@ -170,7 +170,9 @@ function get_item_data($card_id): DOMDocument
         $item_record->setAttribute("id", $i);
         $item_record->appendChild($item_xml->createElement("card_id", $card_id));
         $item_record->appendChild($item_xml->createElement("item_id", $i));
-        $item_record->appendChild($item_xml->createElement("item_num", "99"));
+        // Max at 99, so if all 99 and don't use safe, the unlocking page will refuse to unlock for safes.
+        //Change to 90 to make unlocking page work
+        $item_record->appendChild($item_xml->createElement("item_num", "90"));
         $item_record->appendChild($item_xml->createElement("created", "1"));
         $item_record->appendChild($item_xml->createElement("modified", "1"));
         $item_record->appendChild($item_xml->createElement("new_flag", "1"));
