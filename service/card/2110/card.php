@@ -81,23 +81,23 @@ function get_unlock_reward_data($card_id): DOMDocument
     $unlock_reward_root->appendChild($unlock_reward_items);
     $count = 1;
 
-    for ($i = 0; $i <= $count; $i++) {
+    for ($i = 1; $i <= $count; $i++) {
         $unlock_reward_record = $unlock_reward_xml->createElement("record");
         $unlock_reward_record->setAttribute("id", $i);
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("card_id"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("reward_id", $i));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("reward_type", "2"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("reward_type", "1"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_date", "2021-05-30"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_date", "2030-05-30"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_time", "00:00:01"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_time", "23:59:59"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("target_id", "2"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("target_num", "2"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("target_id", "1"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("target_num", "1"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("key_num", "3"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("use_flag", "1"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("display_flag", "1"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("created", "1"));
-        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("modified", "1"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("created", "2021-05-30 00:00:01"));
+        $unlock_reward_record->appendChild($unlock_reward_xml->createElement("modified", "2021-05-30 00:00:01"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("limited_flag", "0"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("open_unixtime", "1622304001"));
         $unlock_reward_record->appendChild($unlock_reward_xml->createElement("close_unixtime", "1906387199"));
@@ -117,18 +117,18 @@ function get_unlock_keynum_data($card_id): DOMDocument
     $unlock_keynum_root->appendChild($unlock_keynum_items);
     $count = 1;
 
-    for ($i = 0; $i <= $count; $i++) {
+    for ($i = 1; $i <= $count; $i++) {
         $unlock_keynum_record = $unlock_keynum_xml->createElement("record");
         $unlock_keynum_record->setAttribute("id", $i);
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("card_id", $card_id));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("reward_id", $i));
-        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("key_num", "1"));
+        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("key_num", "0"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("reward_count", "1"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("expired_flag", "0"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("cash_flag", "0"));
         $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("use_flag", "1"));
-        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("created", "1"));
-        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("modified", "1"));
+        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("created", "2021-05-30 00:00:01"));
+        $unlock_keynum_record->appendChild($unlock_keynum_xml->createElement("modified", "2021-05-30 00:00:01"));
         $unlock_keynum_items->appendChild($unlock_keynum_record);
     }
 

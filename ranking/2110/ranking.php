@@ -10,7 +10,7 @@
 require("../../config/config.inc");
 
 $gid = isset($_GET['gid']) ? intval($_GET['gid']) : NULL;
-$mac_addr = isset($_GET['mac_addr']) ? $_GET['mac_addr'] : NULL;
+$mac_addr = $_GET['mac_addr'] ?? NULL;
 $cmd_type = isset($_GET['cmd_type']) ? intval($_GET['cmd_type']) : NULL;
 $tenpo_id = isset($_GET['tenpo_id']) ? intval($_GET['tenpo_id']) : NULL;
 $param = $_GET['param'];
@@ -21,7 +21,6 @@ $username = MYSQL_USERNAME;
 $password = MYSQL_PASSWORD;
 $hostname = MYSQL_HOSTNAME;
 $port = MYSQL_PORT;
-$service_name = MYSQL_SERVICE_NAME;
 $connection_string = RANKING_2110_DATABASE;
 $dsn_ranking = 'mysql:host=' . MYSQL_HOSTNAME . ';dbname=' . RANKING_2110_DATABASE;
 
@@ -86,14 +85,13 @@ switch ((string)$cmd_type)
 strOutput($data->saveXML());
 exit;
 
-function getGlobalRanking($rows_lower, $rows_upper, $time)
+function getGlobalRanking($rows_lower, $rows_upper, $time): DOMDocument
 {
     $table = "global";
     $dsn_ranking = 'mysql:host=' . MYSQL_HOSTNAME . ';dbname=' . RANKING_2110_DATABASE;
     $dbh = NULL;
 
-    try
-    {
+    try {
         // Connect
         $dbh = new PDO($dsn_ranking, MYSQL_USERNAME, MYSQL_PASSWORD);
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
