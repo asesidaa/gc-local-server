@@ -23,10 +23,11 @@ Based on https://github.com/fatal-bundy/nesys_at_home
 - The root CA have to be re-imported every time computer reboots, I don't know why. I am not familiar with that. But it
   works.
 - To make the card reading work, I am currently using teknoparrot to emulate RFiD. However, for IO, I am using jconfig. They can actually be mixed. Just remember to turn off unnecessary emulations.
+- To add support in teknoparrot, just follow the GC2 support. Notice you have to apply the same patch on GC2 (mouse scanner and RFID). The offset is different, but you can easily find them since the functions are almost the same.
 
 # Missing functions
-
+- [ ] No ranking of any sort is implemented, since this is just a local server. The stub is there.
 - [ ] Coin is fixed at 999999
 - [ ] Everything is unlocked at beginning, except for high difficulty and extras.
-- [ ] All the item count will always be 99
+- [ ] All the item count will always be 90
 - [x] ~~Reward unlocking is broken, wait 60s or the game will crash~~ Fixed, but not saving it, just to make the game over faster
