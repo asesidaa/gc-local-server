@@ -1,4 +1,3 @@
-#!E:/xampp/php/php.exe
 <?php
 
 /**
