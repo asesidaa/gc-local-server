@@ -163,7 +163,7 @@ function get_item_data($card_id): DOMDocument
     $item_xml->appendChild($item_root);
     $item_items = $item_xml->createElement("item");
     $item_root->appendChild($item_items);
-    $count = 21;
+    $count = ITEM_COUNT;
 
     for ($i = 1; $i <= $count; $i++) {
         $item_record = $item_xml->createElement("record");
@@ -192,7 +192,7 @@ function get_navigator_data($card_id): DOMDocument
     $navigator_records = $navigator_xml->createElement("navigator");
     $navigator_root->appendChild($navigator_records);
 
-    $count = 71;
+    $count = NAVIGATOR_COUNT;
 
     for ($i = 1; $i <= $count; $i++) {
         $navigator_record = $navigator_xml->createElement("record");
@@ -218,7 +218,7 @@ function get_title_data($card_id): DOMDocument
     $title_records = $title_xml->createElement("title");
     $title_root->appendChild($title_records);
 
-    $count = 4942;
+    $count = TITLE_COUNT;
 
     for ($i = 1; $i <= $count; $i++) {
         $title_record = $title_xml->createElement("record");
@@ -245,7 +245,7 @@ function get_avatar_data($card_id): DOMDocument
     $avatar_records = $avatar_xml->createElement("avatar");
     $avatar_root->appendChild($avatar_records);
 
-    $count = 294;
+    $count = AVATAR_COUNT;
 
     for ($i = 1; $i <= $count; $i++) {
         $avatar_record = $avatar_xml->createElement("record");
@@ -271,7 +271,7 @@ function get_skin_data($card_id): DOMDocument
     $skin_records = $skin_xml->createElement("skin");
     $skin_root->appendChild($skin_records);
 
-    $count = 21;
+    $count = SKIN_COUNT;
 
     for ($i = 1; $i <= $count; $i++) {
         $skin_record = $skin_xml->createElement("record");
@@ -297,7 +297,7 @@ function get_se_data($card_id): DOMDocument
     $se_records = $se_xml->createElement("sound_effect");
     $se_root->appendChild($se_records);
 
-    $count = 25;
+    $count = SE_COUNT;
 
     for ($i = 1; $i <= $count; $i++) {
         $se_record = $se_xml->createElement("record");
