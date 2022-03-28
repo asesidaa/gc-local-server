@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.1.1
+- https://www.phpmyadmin.net
+-
+- 主机： 127.0.0.1
+- 生成日期： 2022-03-27 17:37:58
+- 服务器版本： 10.4.22-MariaDB
+- PHP 版本： 8.1.2
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="2110_ranking" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="event_rank">
+                CREATE TABLE `event_rank` (
+                  `rank` int(11) NOT NULL,
+                  `rank2` int(11) NOT NULL,
+                  `card_id` text NOT NULL,
+                  `player_name` text NOT NULL,
+                  `score_i1` int(11) NOT NULL,
+                  `score_bi1` int(11) NOT NULL,
+                  `last_play_tenpo_id` text NOT NULL,
+                  `fcol1` int(99) NOT NULL,
+                  `fcol2` int(99) NOT NULL,
+                  `tenpo_name` text NOT NULL,
+                  `pref_id` text NOT NULL,
+                  `pref` text NOT NULL,
+                  `area_id` text NOT NULL,
+                  `area` text NOT NULL,
+                  `title` text NOT NULL,
+                  `org_rank` int(11) NOT NULL,
+                  `org_rank2` int(11) NOT NULL,
+                  PRIMARY KEY (`rank`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="global">
+                CREATE TABLE `global` (
+                  `rank` int(11) NOT NULL,
+                  `rank2` int(11) NOT NULL,
+                  `card_id` text NOT NULL,
+                  `player_name` text NOT NULL,
+                  `score_i1` int(11) NOT NULL,
+                  `score_bi1` int(11) NOT NULL,
+                  `last_play_tenpo_id` text NOT NULL,
+                  `fcol1` int(99) NOT NULL,
+                  `fcol2` int(99) NOT NULL,
+                  `tenpo_name` text NOT NULL,
+                  `pref_id` text NOT NULL,
+                  `pref` text NOT NULL,
+                  `area_id` text NOT NULL,
+                  `area` text NOT NULL,
+                  `title` text NOT NULL,
+                  `org_rank` int(11) NOT NULL,
+                  `org_rank2` int(11) NOT NULL,
+                  PRIMARY KEY (`rank`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+            <pma:table name="play_num_rank">
+                CREATE TABLE `play_num_rank` (
+                  `rank` int(11) NOT NULL,
+                  `rank2` int(11) NOT NULL,
+                  `pcol1` text NOT NULL,
+                  `score_bi1` int(11) NOT NULL,
+                  `title` text NOT NULL,
+                  `artist` text NOT NULL,
+                  `org_rank` int(11) NOT NULL,
+                  `org_rank2` int(11) NOT NULL
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - 数据库： '2110_ranking'
+    -->
+    <database name="2110_ranking">
+        <!-- 表 event_rank -->
+        <!-- 表 global -->
+        <!-- 表 play_num_rank -->
+    </database>
+</pma_xml_export>
