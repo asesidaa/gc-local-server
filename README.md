@@ -12,8 +12,8 @@ Based on https://github.com/fatal-bundy/nesys_at_home
 4. Import the generated root CA (**with private key!!**) to Personal and trusted root CA tab
 5. On localhost, set up a webserver with whatever program, enable https
 6. Create a database, you can change the database config in config/config.inc
-7. Create 6 tables, schemas dumped in 2110_card.xml using phpmyadmin
-8. For music_unlock and music_extra, backup data are exported to .sql files
+7. Create tables, schemas dumped in 2110_card.xml and 2110_ranking.xml using phpmyadmin
+8. For music_unlock and music_extra, backup data are exported to .sql files (if you are using 4MAX or omnimix, try 4ex_omnimix file)
 9. For card_main, first import the backup data then for card with id 7020392010281502, change the card id and player
    name of your choice
 10. Open the game, without nesys emu, you should be able to use the card
