@@ -1,3 +1,9 @@
+# !!!Archived!!!
+
+I am currently working on a rewrite version, which will be self-contained (including the web server and certificate generation), so this repo is now archived and will not be updated.
+
+The new version will use C# and sqlite as database, to reduce dependency.
+
 # GC server
 
 A GC4EX local server prototype, feel free to rewrite it and improve.
