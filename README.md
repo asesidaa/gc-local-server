@@ -4,6 +4,8 @@ I am currently working on a rewrite version, which will be self-contained (inclu
 
 The new version will use C# and sqlite as database, to reduce dependency.
 
+New version: https://github.com/asesidaa/GC-local-server-rewrite
+
 # GC server
 
 A GC4EX local server prototype, feel free to rewrite it and improve.
